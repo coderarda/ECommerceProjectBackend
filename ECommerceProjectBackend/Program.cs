@@ -47,8 +47,6 @@ productsApi.MapPost("/", (ECommerceDbContext db, Product product) =>
 
 var usersApi = app.MapGroup("/users");
 
-
-
 app.Run();
 
 [JsonSerializable(typeof(Product))]

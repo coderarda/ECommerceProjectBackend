@@ -112,7 +112,7 @@ public partial class ECommerceDbContext : DbContext
             entity.HasKey(e => e.ProductId).HasName("PRIMARY");
 
             entity
-                .ToTable("Product")
+                .ToTable("Products")
                 .HasCharSet("utf8mb3")
                 .UseCollation("utf8mb3_general_ci");
 
