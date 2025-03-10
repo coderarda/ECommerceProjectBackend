@@ -17,9 +17,7 @@ public partial class ECommerceDbContext : DbContext
     }
 
     public virtual DbSet<Comment> Comments { get; set; }
-
-    public virtual DbSet<EfmigrationsHistory> EfmigrationsHistories { get; set; }
-
+ 
     public virtual DbSet<PaymentInfo> PaymentInfos { get; set; }
 
     public virtual DbSet<Product> Products { get; set; }
@@ -60,16 +58,6 @@ public partial class ECommerceDbContext : DbContext
                 .HasForeignKey(d => d.UserUserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_Comment_User1");
-        });
-
-        modelBuilder.Entity<EfmigrationsHistory>(entity =>
-        {
-            entity.HasKey(e => e.MigrationId).HasName("PRIMARY");
-
-            entity.ToTable("__EFMigrationsHistory");
-
-            entity.Property(e => e.MigrationId).HasMaxLength(150);
-            entity.Property(e => e.ProductVersion).HasMaxLength(32);
         });
 
         modelBuilder.Entity<PaymentInfo>(entity =>

@@ -47,6 +47,20 @@ productsApi.MapPost("/", (ECommerceDbContext db, Product product) =>
 
 var usersApi = app.MapGroup("/users");
 
+usersApi.MapGet("/{id}", (ECommerceDbContext db, int id) =>
+{
+    var user = db.Users.Find(id);
+    return user != null ? Results.Ok(user) : Results.NotFound();
+});
+
+usersApi.MapPost("/", (ECommerceDbContext db, User user) =>
+{
+    // Verify email here
+    db.Users.Add(user);
+    db.SaveChanges();
+    return Results.Created($"/users/{user.UserId}", user);
+});
+
 app.Run();
 
 [JsonSerializable(typeof(Product))]
