@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Scaffolding.Internal;
 
-namespace ECommerceProject.Models;
+namespace ECommerceProjectBackend.Models;
 
 public partial class ECommerceDbContext : DbContext
 {
@@ -17,7 +17,9 @@ public partial class ECommerceDbContext : DbContext
     }
 
     public virtual DbSet<Comment> Comments { get; set; }
- 
+
+    public virtual DbSet<EfmigrationsHistory> EfmigrationsHistories { get; set; }
+
     public virtual DbSet<PaymentInfo> PaymentInfos { get; set; }
 
     public virtual DbSet<Product> Products { get; set; }
@@ -25,6 +27,10 @@ public partial class ECommerceDbContext : DbContext
     public virtual DbSet<Seller> Sellers { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseMySql("server=localhost;database=mydb;user=root;password=LjFf12x:)", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.33-mysql"));
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -58,6 +64,16 @@ public partial class ECommerceDbContext : DbContext
                 .HasForeignKey(d => d.UserUserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_Comment_User1");
+        });
+
+        modelBuilder.Entity<EfmigrationsHistory>(entity =>
+        {
+            entity.HasKey(e => e.MigrationId).HasName("PRIMARY");
+
+            entity.ToTable("__EFMigrationsHistory");
+
+            entity.Property(e => e.MigrationId).HasMaxLength(150);
+            entity.Property(e => e.ProductVersion).HasMaxLength(32);
         });
 
         modelBuilder.Entity<PaymentInfo>(entity =>
@@ -100,7 +116,6 @@ public partial class ECommerceDbContext : DbContext
             entity.HasKey(e => e.ProductId).HasName("PRIMARY");
 
             entity
-                .ToTable("Products")
                 .HasCharSet("utf8mb3")
                 .UseCollation("utf8mb3_general_ci");
 
@@ -177,6 +192,9 @@ public partial class ECommerceDbContext : DbContext
                 .HasMaxLength(45)
                 .HasColumnName("userEmail");
             entity.Property(e => e.UserGender).HasColumnName("userGender");
+            entity.Property(e => e.UserLastName)
+                .HasMaxLength(45)
+                .HasColumnName("userLastName");
             entity.Property(e => e.UserName)
                 .HasMaxLength(45)
                 .HasColumnName("userName");

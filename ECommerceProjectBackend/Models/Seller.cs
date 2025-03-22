@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ECommerceProject.Models;
+namespace ECommerceProjectBackend.Models;
 
 public partial class Seller
 {

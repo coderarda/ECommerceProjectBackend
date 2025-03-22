@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 using DotNetEnv;
-using ECommerceProject.Models;
+using ECommerceProjectBackend.Models;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateSlimBuilder(args);

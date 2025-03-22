@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ECommerceProject.Models;
+namespace ECommerceProjectBackend.Models;
 
 public partial class User
 {
@@ -16,6 +16,8 @@ public partial class User
     public sbyte UserGender { get; set; }
 
     public string UserPassword { get; set; } = null!;
+
+    public string UserLastName { get; set; } = null!;
 
     public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
 
